@@ -1,0 +1,10 @@
+url:
+  base:
+    file: /Users/igyeongdo/WokrSpace/Project_File/JJEJU/files/
+
+spring:
+  datasource:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      url: jdbc:log4jdbc:mysql://localhost:33060/jeju?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      username: dev
+      password: dbcpdlxkf12!

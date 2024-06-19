@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.travel.jeju.mapper.FileMapper">
+
+<delete id="deleteFile" parameterType="Integer">
+   DELETE
+   FROM file
+   WHERE idx = #{value}
+</delete>
+
+<select id="selectFileByFileGroupNoMain" parameterType="Integer" resultType="FileModel">
+   SELECT
+      *
+   FROM file F
+   WHERE F.file_group_no = #{value}
+      AND F.description LIKE CONCAT('%', 'Main')
+   LIMIT 1
+</select>
+
+<select id="selectFileByFileGroupNo" parameterType="Integer" resultType="FileModel">
+   SELECT
+      *
+   FROM file F
+   WHERE F.file_group_no = #{value}
+</select>
+
+<select id="selectFileByFileGroupNoAndNotMain" parameterType="Integer" resultType="FileModel">
+   SELECT
+      *
+   FROM file F
+   WHERE F.file_group_no = #{value}
+      AND F.description NOT LIKE '%Main'
+</select>
+
+<select id="findFirstByOrderByFileGroupNoDesc" resultType="FileModel">
+   SELECT 
+      F.file_group_no 
+   FROM file F
+   ORDER BY F.file_group_no DESC 
+   LIMIT 1
+</select>
+
+
+<insert id="saveAll" parameterType="FileModel">
+   INSERT INTO file (idx, file_group_no, url, file_ori_nm, file_sys_nm, extension, description, file_size, file_size_unit)
+   VALUES
+      <foreach collection="list" item="value" index="index" separator=",">
+            (null, #{value.file_group_no}, #{value.url}, #{value.file_ori_nm}, #{value.file_sys_nm}, #{value.extension}, #{value.description}, #{value.file_size}, #{value.file_size_unit})
+      </foreach>
+</insert>
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.jeju.mapper.SvcenterMapper">
+
+	<select id="selectNotice" resultType="NoticeDto" parameterType="PageModel">
+		SELECT 
+			* 
+		FROM notice 
+		ORDER BY n_pk_num DESC 
+		LIMIT ${pageNum}, ${listCnt}
+	</select>
+
+	<select id="selectNoticeById" parameterType="Integer" resultType="NoticeDto">
+		SELECT 
+			* 
+		FROM notice 
+		WHERE n_pk_num=#{n_pk_num}
+	</select>
+
+	<update id="updateNoticeView" parameterType="Integer">
+		UPDATE notice 
+		SET n_views = n_views + 1 
+		WHERE n_pk_num=#{n_pk_num}
+	</update>
+
+	<select id="selectComplaint" resultType="ComplaintDto" parameterType="PageModel">
+		SELECT 
+			* 
+		FROM complaint 
+		ORDER BY co_pk_conum DESC 
+		LIMIT ${pageNum}, ${listCnt}
+	</select>
+
+	<insert id="insertComplaint" parameterType="ComplaintDto">
+		<selectKey keyProperty="co_pk_conum" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO complaint 
+		VALUES
+			(
+				null,
+				#{co_fk_id},
+				#{co_title},
+				#{co_contents},
+				now(),
+				DEFAULT,
+				NUll,
+				DEFAULT
+			)
+	</insert>
+
+	<delete id="deleteComplaintById" parameterType="Integer">
+		DELETE
+		FROM complaint
+		WHERE co_pk_conum = #{value}
+	</delete>
+
+	<delete id="deleteComplaintByTitle" parameterType="String">
+		DELETE
+		FROM complaint
+		WHERE co_title = #{value}
+	</delete>
+
+	<select id="selectComplaintByUsername" resultType="ComplaintDto" parameterType="ListDto">
+		SELECT 
+			* 
+		FROM complaint 
+		WHERE co_fk_id=#{username} 
+		ORDER BY co_create_dt DESC 
+		LIMIT ${pageNum}, ${listCnt}
+	</select>
+
+	<select id="selectComplaintById" parameterType="Integer" resultType="ComplaintDto">
+		SELECT 
+			* 
+		FROM complaint 
+		WHERE co_pk_conum=#{co_pk_conum}
+	</select>
+
+
+
+
+
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	<select id="noticeCntSelect" resultType="int" parameterType="ListDto">
+		SELECT 
+			count(*) 
+		FROM notice
+	</select>
+
+	<delete id="qaDelect" parameterType="Integer">
+		DELETE 
+		FROM complaint 
+		WHERE co_pk_conum=${co_pk_conum}
+	</delete>
+
+
+</mapper>

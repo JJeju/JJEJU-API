@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.jeju.mapper.MainMapper">
+   
+<select id="selectCompanyByCategory" parameterType="String" resultMap="selectMainCompanyResultMap">
+   SELECT 
+      * 
+   FROM company C
+   LEFT OUTER JOIN file F
+      ON C.c_file_group_no = F.file_group_no
+      AND F.description LIKE '%Main'
+   WHERE C.c_condition = true
+   <if test="category != null and category != ''">
+      AND C.c_category = #{cate}
+   </if>
+   ORDER BY RAND()
+</select>
+
+<!-- property 자바 타입명, column DB 컬럼명 -->
+<resultMap id="selectMainCompanyResultMap" type="businessPlaceModel">
+   <id property="c_pk_num" column="c_pk_num"/>
+   <result property="c_cnum" column="c_cnum"/>
+   <result property="c_name" column="c_name"/>
+   <result property="c_phone" column="c_phone"/>
+   <result property="c_category" column="c_category"/>
+   <result property="c_addr" column="c_addr"/>
+   <result property="c_type" column="c_type"/>
+   <result property="c_lat" column="c_lat"/>
+   <result property="c_lon" column="c_lon"/>
+   
+   <!-- property 자바 타입명, column DB  컬럼명 || javaType은 alias 별칭으로 정한걸 넣어도 상관 없음 -->
+   <association property="fileData" javaType="businessFileModel">
+      <id property="idx" column="idx" />
+      <result property="file_group_no" column="file_group_no" />
+      <result property="url" column="url" />
+      <result property="file_ori_nm" column="file_ori_nm" />
+      <result property="file_sys_nm" column="file_sys_nm" />
+      <result property="extension" column="extension" />
+      <result property="description" column="description" />
+      <result property="file_size" column="file_size" />
+      <result property="file_size_unit" column="file_size_unit" />
+      <result property="create_dt" column="create_dt" />
+   </association>
+</resultMap>
+
+<select id="selectProductById" parameterType="Integer" resultMap="selectProductByIdResultMap">
+   SELECT 
+      P.*,
+      F.idx AS 'f_idx',
+      F.file_group_no AS 'f_file_group_no',
+      F.url ,
+      F.file_ori_nm ,
+      F.file_sys_nm ,
+      F.extension ,
+      F.description ,
+      F.file_size ,
+      F.file_size_unit ,
+      F.create_dt AS 'f_create_dt'
+   FROM product P
+   LEFT OUTER JOIN file F
+      ON P.file_group_no = F.file_group_no 
+      AND F.description LIKE '%Main'
+   WHERE P.idx = #{value}
+</select>
+
+<!-- property 자바 타입명, column DB 컬럼명 -->
+<resultMap id="selectProductByIdResultMap" type="businessItemModel">
+   <id property="idx" column="idx"/>
+   <result property="p_fk_cnum" column="p_fk_cnum"/>
+   <result property="p_name" column="p_name"/>
+   <result property="p_price" column="p_price"/>
+   <result property="p_content" column="p_content"/>
+   <result property="p_reserver_status" column="p_reserver_status"/>
+   <result property="p_exposure" column="p_exposure"/>
+   <result property="file_group_no" column="file_group_no"/>
+   <result property="create_dt" column="create_dt"/>
+   <result property="update_dt" column="update_dt"/>
+   
+   <!-- property 자바 타입명, column DB  컬럼명 || javaType은 alias 별칭으로 정한걸 넣어도 상관 없음 -->
+   <association property="fileData" javaType="businessFileModel">
+      <id property="idx" column="f_idx" />
+      <result property="file_group_no" column="f_file_group_no" />
+      <result property="url" column="url" />
+      <result property="file_ori_nm" column="file_ori_nm" />
+      <result property="file_sys_nm" column="file_sys_nm" />
+      <result property="extension" column="extension" />
+      <result property="description" column="description" />
+      <result property="file_size" column="file_size" />
+      <result property="file_size_unit" column="file_size_unit" />
+      <result property="create_dt" column="f_create_dt" />
+   </association>
+</resultMap>
+
+<insert id="BasketInsert" parameterType="HashMap">
+   <if test='cate.equals("숙박")'>
+      INSERT INTO basket 
+      VALUES
+         (
+            null,
+            #{basdto.bk_fk_tnum},
+            #{basdto.bk_fk_cnum},
+            #{basdto.bk_fk_id},
+            #{basdto.bk_fk_num},
+            #{basdto.bk_goods},
+            #{basdto.bk_price},
+            #{basdto.bk_in},
+            #{basdto.bk_out},
+            #{basdto.bk_name},
+            #{basdto.bk_number},
+            #{basdto.bk_carch},
+            0,
+            null,
+            #{basdto.bk_people}
+         )
+   </if>
+   <if test='cate.equals("레저")'>
+      <if test='at_rtch.equals("1")'>
+         INSERT INTO basket 
+         VALUES
+            (
+               null,
+               #{basdto.bk_fk_tnum},
+               #{basdto.bk_fk_cnum},
+               #{basdto.bk_fk_id},
+               #{basdto.bk_fk_num},
+               #{basdto.bk_goods},
+               #{basdto.bk_price},
+               #{basdto.bk_in},
+               #{basdto.bk_out},
+               #{basdto.bk_name},
+               #{basdto.bk_number},
+               #{basdto.bk_carch},
+               0,
+               null,
+               #{basdto.bk_people}
+            )
+      </if>
+      <if test='at_rtch.equals("0")'>
+         INSERT INTO basket 
+         VALUES
+            (
+               null,
+               #{basdto.bk_fk_tnum},
+               #{basdto.bk_fk_cnum},
+               #{basdto.bk_fk_id},
+               #{basdto.bk_fk_num},
+               #{basdto.bk_goods},
+               #{basdto.bk_price},
+               #{basdto.bk_in},
+               #{basdto.bk_out},
+               null,
+               null,
+               null,
+               0,
+               null,
+               #{basdto.bk_people}
+            )
+      </if>
+   </if>
+   <if test='cate.equals("식당")'>
+      INSERT INTO basket 
+      VALUES
+         (
+            null,
+            #{basdto.bk_fk_tnum},
+            #{basdto.bk_fk_cnum},
+            #{basdto.bk_fk_id},
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+         )
+   </if>
+</insert>
+
+<select id="getTrdto" parameterType="String" resultType="TravelrouteDto">
+   SELECT 
+      * 
+   FROM travelroute 
+   WHERE tr_pk_num = #{trnum}
+</select>
+
+<select id="selectLodCompany" parameterType="String" resultType="BasketDto">
+   SELECT 
+      b.bk_pk_num, 
+      b.bk_fk_tnum, 
+      b.bk_fk_cnum, 
+      b.bk_fk_id, 
+      b.bk_fk_num, 
+      b.bk_goods, 
+      b.bk_price, 
+      b.bk_in, 
+      bk_out, 
+      b.bk_name, 
+      b.bk_number, 
+      b.bk_carch, 
+      b.bk_paych, 
+      b.bk_paytime, 
+      b.bk_people, 
+      c_name 
+   FROM basket AS b 
+   INNER JOIN company AS c 
+      ON b.bk_fk_cnum = c.c_pk_num 
+   WHERE c.c_category='숙박' 
+      AND b.bk_fk_tnum =#{trnum} 
+</select>
+
+<select id="selectActCompany" parameterType="String" resultType="BasketDto">
+   SELECT 
+      b.bk_pk_num, 
+      b.bk_fk_tnum, 
+      b.bk_fk_cnum, 
+      b.bk_fk_id, 
+      b.bk_fk_num, 
+      b.bk_goods, 
+      b.bk_price, 
+      b.bk_in, 
+      bk_out, 
+      b.bk_name, 
+      b.bk_number, 
+      b.bk_carch, 
+      b.bk_paych, 
+      b.bk_paytime, 
+      b.bk_people, 
+      c_name 
+   FROM basket AS b 
+   INNER JOIN company AS c 
+      ON b.bk_fk_cnum = c.c_pk_num 
+   WHERE c.c_category='레저' 
+      AND b.bk_fk_tnum =#{trnum}
+</select>
+
+<select id="selectFoodCompany" parameterType="String" resultType="BasketDto">
+   SELECT 
+      b.bk_pk_num, 
+      b.bk_fk_tnum, 
+      b.bk_fk_cnum, 
+      b.bk_fk_id, 
+      b.bk_fk_num, 
+      b.bk_goods, 
+      b.bk_price, 
+      b.bk_in, 
+      bk_out, 
+      b.bk_name, 
+      b.bk_number, 
+      b.bk_carch, 
+      b.bk_paych, 
+      b.bk_paytime, 
+      b.bk_people, 
+      c_name 
+   FROM basket AS b 
+   INNER JOIN company AS c 
+      ON b.bk_fk_cnum = c.c_pk_num 
+   WHERE c.c_category='식당' and b.bk_fk_tnum =#{trnum}
+</select>
+
+<delete id="delBasket" parameterType="String">
+   DELETE 
+   FROM basket 
+   WHERE bk_pk_num = #{bk_pk_num}
+</delete>
+
+<update id="payUpdate" parameterType="BasketDto">
+   UPDATE basket 
+   SET bk_paych = #{bk_paych}, bk_paytime = #{bk_paytime} 
+   WHERE bk_pk_num = #{bk_pk_num}
+</update>
+
+<select id="loptionCheck" parameterType="LoptionDto" resultType="LoptionDto">
+   SELECT 
+      l_fk_cnum 
+   FROM loption 
+   <trim prefix="WHERE" suffixOverrides="AND">
+      <if test='l_cityview.equals("1")'>
+      l_cityview = ${l_cityview} AND
+      </if>
+      <if test='l_seeview.equals("1")'>
+      l_seeview = ${l_seeview} AND
+      </if>
+      <if test='l_skyview.equals("1")'>
+      l_skyview = ${l_skyview} AND
+      </if>
+      <if test='l_outdoor.equals("1")'>
+      l_outdoor = ${l_outdoor} AND
+      </if>
+      <if test='l_petok.equals("1")'>
+      l_petok = ${l_petok} AND
+      </if>
+      <if test='l_bbq.equals("1")'>
+      l_bbq = ${l_bbq} AND
+      </if>
+      <if test='l_cooking.equals("1")'>
+      l_cooking = ${l_cooking} AND
+      </if>
+      <if test='l_pool.equals("1")'>
+      l_pool = ${l_pool} AND
+      </if>
+      <if test='l_wallpool.equals("1")'>
+      l_wallpool = ${l_wallpool} AND
+      </if>
+      <if test='l_spa.equals("1")'>
+      l_spa = ${l_spa} AND
+      </if>
+      <if test='l_garaoke.equals("1")'>
+      l_garaoke = ${l_garaoke} AND
+      </if>
+   </trim>
+</select>
+
+<select id="aoptionCheck" parameterType="AoptionDto" resultType="AoptionDto">
+   SELECT 
+      a_fk_cnum 
+   FROM aoption 
+   <trim prefix="WHERE" suffixOverrides="AND">
+      <if test='a_waterpark.equals("1")'>
+      a_waterpark = ${a_waterpark} AND
+      </if>
+      <if test='a_spa.equals("1")'>
+      a_spa = ${a_spa} AND
+      </if>
+      <if test='a_surfing.equals("1")'>
+      a_surfing = ${a_surfing} AND
+      </if>
+      <if test='a_rafting.equals("1")'>
+      a_rafting = ${a_rafting} AND
+      </if>
+      <if test='a_snowcooling.equals("1")'>
+      a_snowcooling = ${a_snowcooling} AND
+      </if>
+      <if test='a_aquarium.equals("1")'>
+      a_aquarium = ${a_aquarium} AND
+      </if>
+      <if test='a_flowers.equals("1")'>
+      a_flowers = ${a_flowers} AND
+      </if>
+      <if test='a_zoo.equals("1")'>
+      a_zoo = ${a_zoo} AND
+      </if>
+      <if test='a_shooting.equals("1")'>
+      a_shooting = ${a_shooting} AND
+      </if>
+      <if test='a_horse.equals("1")'>
+      a_horse = ${a_horse} AND
+      </if>
+      <if test='a_paragliding.equals("1")'>
+      a_paragliding = ${a_paragliding} AND
+      </if>
+      <if test='a_zipline.equals("1")'>
+      a_zipline = ${a_zipline} AND
+      </if>
+      <if test='a_bike.equals("1")'>
+      a_bike = ${a_bike} AND
+      </if>
+      <if test='a_cart.equals("1")'>
+      a_cart = ${a_cart} AND
+      </if>
+      <if test='a_atv.equals("1")'>
+      a_atv = ${a_atv} AND
+      </if>
+      <if test='a_tourpass.equals("1")'>
+      a_tourpass = ${a_tourpass} AND
+      </if>
+      <if test='a_yort.equals("1")'>
+      a_yort = ${a_yort} AND
+      </if>
+      <if test='a_shipfishing.equals("1")'>
+      a_shipfishing = ${a_shipfishing} AND
+      </if>
+      <if test='a_cablecar.equals("1")'>
+      a_cablecar = ${a_cablecar} AND
+      </if>
+      <if test='a_showpainting.equals("1")'>
+      a_showpainting = ${a_showpainting} AND
+      </if>
+      <if test='a_fishinglounge.equals("1")'>
+      a_fishinglounge = ${a_fishinglounge} AND
+      </if>
+      <if test='a_show.equals("1")'>
+      a_show = ${a_show} AND
+      </if>
+   </trim>
+</select>
+
+<insert id="reviewInsert" parameterType="ReviewDto" useGeneratedKeys="true" keyProperty="r_pk_num">
+   <selectKey keyProperty="rv_pk_num" resultType="Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+   </selectKey>
+   INSERT INTO review 
+   VALUES
+      (
+         null, 
+         #{rv_fk_cnum},
+         #{rv_fk_id},
+         null, 
+         now(),
+         #{rv_contents},
+         #{rv_star},
+         null,
+         default,
+         default,
+         '0'
+      )
+</insert>
+
+<update id="ReviewR_imgU" parameterType="HashMap">
+   UPDATE review 
+   SET rv_img = #{sysname} 
+   WHERE rv_pk_num=#{rv_pk_num}
+</update>
+
+<update id="updateReviewImg" parameterType="ReviewDto">
+   UPDATE review 
+   SET file_group_no = #{file_group_no} 
+   WHERE rv_pk_num=#{rv_pk_num}
+</update>
+
+<select id="selectHomeComplaint" resultType="ComplaintDto">
+   SELECT 
+      co_pk_conum,
+      co_title,
+      co_create_dt 
+   FROM complaint 
+   ORDER BY co_pk_conum DESC 
+   LIMIT 5;
+</select>
+	
+<select id="selectHomeNotice" resultType="NoticeDto">
+   SELECT 
+      n_pk_num,
+      n_title,
+      n_date 
+   FROM notice 
+   ORDER BY n_pk_num DESC 
+   LIMIT 5;
+</select>
+	
+<select id="selectHomeEvent" resultType="EventDto">	
+   SELECT 
+      *
+   FROM event 
+   ORDER BY RAND() DESC 
+   LIMIT 0,4;
+</select>
+	
+<select id="selectHomeLodgment" resultType="CompanyDto">
+   SELECT 
+      * 
+   FROM company 
+   WHERE c_category="숙박" 
+   ORDER BY RAND() 
+   LIMIT 0,4
+</select>
+
+<select id="selectHomeLeisure" resultType="CompanyDto">
+   SELECT 
+      * 
+   FROM company 
+   WHERE c_category="레저" 
+   ORDER BY RAND() 
+   LIMIT 0,4
+</select>
+
+<select id="selectHomeRestaurant" resultType="CompanyDto">
+   SELECT 
+      * 
+   FROM company 
+   WHERE c_category="식당" 
+   ORDER BY RAND() 
+   LIMIT 0,4
+</select>
+	
+<select id="homemdcompanyList" resultType="CompanyDto">
+   SELECT 
+      * 
+   FROM company 
+   WHERE c_category="숙박" 
+   ORDER BY RAND() 
+   LIMIT 0,1
+</select>
+	
+<select id="homemdactiveList" resultType="CompanyDto">
+   SELECT 
+      * 
+   FROM company 
+   WHERE c_category="레저" 
+   ORDER BY RAND() 
+   LIMIT 0,1
+</select>
+
+<select id="spotbigList" resultType="SpotDto">
+   SELECT 
+      * 
+   FROM spot 
+   ORDER BY RAND() 
+   LIMIT 0,1
+</select>
+	
+<select id="selectHomeSpot" resultType="SpotDto">
+   SELECT 
+      * 
+   FROM spot 
+   ORDER BY RAND() 
+   LIMIT 0,4
+</select>
+
+<insert id="favoritesInsert" parameterType="FavoritesDto">
+   INSERT INTO favorites 
+   VALUES 
+      (
+         NULL,
+         #{fa_fk_id},
+         #{fa_fk_cnum}
+      )
+</insert>
+
+<select id="selectTop6RandomPublicBlog" resultType="BlogDto">
+   SELECT
+      *
+   FROM Blog b
+   WHERE b.b_public_check = true
+   ORDER BY RAND() 
+   LIMIT 0,6
+</select>
+
+</mapper>

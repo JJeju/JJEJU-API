@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.travel.jeju.mapper.MemberMapper">
+
+<insert id="memberInsert" parameterType="MemberDto">
+	INSERT INTO member 
+	VALUES 
+		(
+			#{m_username},
+			#{m_pass},
+			#{m_name},
+			#{m_gender},
+			#{m_nickname},
+			#{m_birth},
+			#{m_phone},
+			#{m_addr},
+			#{m_email}, 
+			#{m_category}, 
+			default, 
+			default, 
+			default, 
+			default, 
+			null
+		)
+</insert>
+
+<insert id="memberAuthoritiesInsert" parameterType="MemberDto">
+	INSERT INTO authorities 
+	VALUES 
+		(
+			#{m_username},
+			#{m_category}
+		)
+</insert>
+
+
+<select id="pwdSelect" parameterType="String" resultType="String">
+	SELECT 
+		m_pass 
+	FROM member 
+	WHERE m_username=#{m_username}
+</select>
+	
+<select id="memberSelect" parameterType="String" resultType="MemberDto">
+	SELECT
+		M.m_username ,
+		M.m_pass ,
+		M.m_name ,
+		M.m_gender ,
+		M.m_nickname ,
+		M.m_birth ,
+		M.m_phone ,
+		M.m_addr ,
+		M.m_email ,
+		A.authority AS 'm_category' ,
+		M.m_enabled ,
+		M.m_account_non_lock ,
+		M.m_account_non_expired ,
+		M.m_pass_fail_count ,
+		M.m_refresh_token 
+	FROM `member` M
+	LEFT OUTER JOIN authorities A
+		ON M.m_username = A.username
+	WHERE m_username = #{value}
+</select>
+
+<select id="memberAuthoritiesSelect" parameterType="String" resultType="String">
+	SELECT
+		a.authority
+	FROM authorities a
+	WHERE username=#{value}
+</select>
+
+<select id="memberAllSelect" resultType="MemberDto">
+	SELECT
+		* 
+	FROM member 
+</select>
+	
+<select id="idCheck" parameterType="String" resultType="Integer">
+	SELECT 
+		COUNT(*) 
+	FROM member 
+	WHERE m_username=#{m_username}
+</select>
+	
+<select id="nickCheck" parameterType="String" resultType="Integer">
+	SELECT 
+		count(*) 
+	FROM member 
+	WHERE m_nickname=#{m_nickname}
+</select>
+	
+<delete id="memberDelete" parameterType="String">
+	DELETE 
+	FROM member 
+	WHERE m_username = #{m_username}
+</delete>
+	
+		
+<select id = "PwdCheck" parameterType="String" resultType="int">
+	SELECT 
+		COUNT(m_pass) 
+	FROM member 
+	WHERE m_pass=#{m_pass}
+</select>
+	
+	
+<!-- 비밀번호 업데이트 -->
+<update id="pwUpdate" parameterType="MemberDto">
+	UPDATE member 
+	SET m_pass=#{m_pass} 
+	WHERE m_username=#{m_username} 
+</update>
+	
+<!-- 개인정보 업데이트 -->
+<update id="memberUpdate" parameterType="MemberDto">
+	UPDATE member 
+	SET m_birth=#{m_birth}, m_email=#{m_email} 
+	WHERE m_username=#{m_username}
+</update>
+	
+<update id="upgradeMember" parameterType="String">
+	UPDATE member 
+	SET m_category="사업자" 
+	WHERE m_username=#{id}
+</update>
+   
+   
+<update id="memberBlack" parameterType="String">
+	UPDATE member 
+	SET m_category="블랙리스트" 
+	WHERE m_username=#{id}
+</update>
+   
+<update id="loginSuccessUpdate" parameterType="MemberDto">
+	UPDATE member
+	SET m_refresh_token=#{m_refresh_token}, m_pass_fail_count=#{m_pass_fail_count}
+	WHERE m_username=#{m_username}
+</update>
+
+<update id="loginFailUpdate" parameterType="MemberDto">
+	UPDATE member
+	SET m_account_non_lock=#{m_account_non_lock}, m_pass_fail_count=#{m_pass_fail_count}
+	WHERE m_username=#{m_username}
+</update>
+
+<insert id="insertSms" parameterType="SmsDto">
+	INSERT INTO cert_message
+	VALUES
+		(
+			null,
+			#{type},
+			#{content},
+			#{cert_num},
+			#{phone_num},
+			default,
+			default
+		)
+</insert>
+
+<select id="certValid" parameterType="String" resultType="int">
+	SELECT 
+		COUNT(*)
+	FROM cert_message 
+	WHERE phone_num = #{phone_num}
+		AND type = 'REG_CERTIFICATE'
+		AND cert_yn = true
+	ORDER BY create_dt DESC 
+	LIMIT 1
+</select>
+
+<select id="selectCertMessageBas" parameterType="String" resultType="SmsDto">
+	SELECT 
+		*
+	FROM cert_message 
+	WHERE phone_num = #{phone_num}
+		AND cert_yn = false
+	ORDER BY create_dt DESC 
+	LIMIT 1
+</select>
+
+<update id="updateSms" parameterType="int">
+	UPDATE cert_message
+	SET cert_yn = true
+	WHERE idx = #{idx}
+</update>
+
+<update id="updateLogout" parameterType="String">
+	UPDATE member
+	SET m_refresh_token = null
+	WHERE m_username = #{value}
+</update>
+
+<insert id="insertTokenBlack" parameterType="TokenBlackDto">
+	INSERT INTO token_black (username, refresh_token)
+	VALUES
+		(
+			#{username},
+			#{refresh_token}
+		)
+</insert>
+
+<select id="refreshTokenValid" parameterType="TokenBlackDto" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM token_black
+	WHERE username = #{username}
+		AND refresh_token = #{refresh_token}
+
+</select>
+
+<delete id="deleteTestSms" parameterType="String">
+	DELETE 
+	FROM cert_message 
+	WHERE phone_num = #{value}
+</delete>
+
+<delete id="deleteTestAuth" parameterType="String">
+	DELETE 
+	FROM authorities 
+	WHERE username LIKE CONCAT(#{value}, '%')
+</delete>
+
+<delete id="deleteTestId" parameterType="String">
+	DELETE 
+	FROM `member` 
+	WHERE m_username LIKE CONCAT(#{value}, '%')
+</delete>
+
+</mapper>  

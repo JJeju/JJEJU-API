@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.jeju.mapper.TravelrouteMapper">
+
+   <insert id="insertTravel" parameterType="TravelrouteDto">
+   
+      <selectKey keyProperty="tr_pk_num" resultType="Integer">
+         SELECT LAST_INSERT_ID()
+      </selectKey>
+
+      INSERT INTO travelroute 
+      VALUES
+         (
+            NULL,
+            #{tr_fk_id},
+            #{tr_title},
+            #{tr_in},
+            #{tr_out},
+            #{tr_relationship},
+            DEFAULT
+         )
+   </insert>
+
+   <delete id="deleteTravelById" parameterType="Integer">
+      DELETE
+      FROM travelroute
+      WHERE tr_pk_num = #{value}
+   </delete>
+
+   <delete id="deleteTravelByTitle" parameterType="String">
+      DELETE
+      FROM travelroute
+      WHERE tr_title = #{value}
+   </delete>
+
+   <insert id="insertTravelPlan" parameterType="travelPlanDto">
+      INSERT INTO travel_plan
+      VALUES
+      <foreach collection="list" item="value" index="index" separator=",">
+            (
+               null, 
+               #{value.tp_fk_tnum}, 
+               #{value.tp_fk_company_num}, 
+               #{value.tp_item_category}, 
+               #{value.tp_plan_start_date_time}, 
+               #{value.tp_plan_end_date_time}, 
+               #{value.tp_rm}, 
+               #{value.create_dt},
+               null
+            )
+      </foreach>
+   </insert>
+
+   <select id="selectMyTravelNumber" parameterType="String" resultType="Integer">
+      SELECT
+         t.tr_pk_num
+      FROM travelroute t
+      WHERE tr_fk_id = #{value}
+   </select>
+
+   <select id="selectTravelById" parameterType="Integer" resultType="TravelrouteDto">
+      SELECT
+         *
+      FROM travelroute
+      WHERE tr_pk_num = #{value}
+   </select>
+
+   <select id="selectTravelPlanById" parameterType="Integer" resultType="travelPlanDto">
+      SELECT
+         *
+      FROM travel_plan
+      WHERE tp_pk_num = #{value}
+   </select>
+
+   <delete id="deleteTravelPlanById" parameterType="Integer">
+      DELETE
+      FROM travel_plan
+      WHERE tp_pk_num = #{value}
+   </delete>
+
+   <update id="updateTravelPlan" parameterType="travelPlanDto">
+      UPDATE travel_plan
+      SET 
+         tp_plan_start_date_time = #{tp_plan_start_date_time},
+         tp_plan_end_date_time = #{tp_plan_end_date_time},
+         tp_rm = #{tp_rm} ,
+         update_dt = #{update_dt}
+      WHERE tp_pk_num = #{tp_pk_num}
+   </update>
+
+   <select id="selectTravelPlanByPlanNum" parameterType="Integer" resultType="travelPlanDto">
+      SELECT
+         *
+      FROM travel_plan
+      WHERE tp_fk_tnum = #{value}
+   </select>
+   
+   <select id="traSelect" parameterType="String" resultType="TravelrouteDto">
+      SELECT 
+         * 
+      FROM travelroute 
+      WHERE tr_pk_num=#{trnum}
+   </select>
+</mapper>

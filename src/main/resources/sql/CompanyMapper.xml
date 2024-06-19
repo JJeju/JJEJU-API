@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.jeju.mapper.CompanyMapper">
+
+<select id="selectRoomById" parameterType="Integer" resultType="RoomDto">
+   SELECT 
+      * 
+   FROM room 
+   WHERE r_pk_num=#{num}
+</select>
+
+<select id="selectAactivityById" parameterType="String" resultType="AactivityDto">
+   SELECT 
+      * 
+   FROM Aactivity 
+   WHERE at_pk_num=#{num}
+</select>
+
+<insert id="CompanyInsert" parameterType="CompanyDto">
+   INSERT INTO company 
+   VALUES
+      (
+         #{c_pk_cnum},
+         #{c_fk_id},#
+         {c_name},
+         #{c_phone},
+         #{c_category},
+         #{c_addr},
+         null,
+         default,
+         default,
+         null,
+         #{c_type}
+      )
+</insert>
+
+<insert id="loptionInsert" parameterType="String">
+   INSERT INTO loption 
+   VALUES
+      (
+         #{cnum},
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      )
+</insert>
+
+<insert id="aoptionInsert" parameterType="String">
+   INSERT INTO aoption 
+   VALUES
+      (
+         #{cnum},
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      )
+</insert>
+
+<update id="CompanyC_imgU" parameterType="HashMap">
+   UPDATE company 
+   SET c_img=#{sysname} 
+   WHERE c_pk_cnum=#{c_pk_cnum}
+</update>
+
+<insert id="CimgInsert" parameterType="HashMap">
+   INSERT INTO cimg 
+   VALUES 
+      (
+         NULL,
+         #{c_pk_cnum},
+         #{oriname},
+         #{sysname}
+      )
+</insert>
+
+<select id="getCimgList" parameterType="Integer" resultType="CimgDto">
+   SELECT 
+      * 
+   FROM cimg 
+   WHERE ci_fk_num = #{cnum}
+</select>
+
+<delete id="deleteCimg" parameterType="String">
+   DELETE 
+   FROM cimg 
+   WHERE ci_fk_num = #{cnum}
+</delete>
+
+<update id="companyUpdate" parameterType="CompanyDto">
+   UPDATE company 
+   SET c_type = #{c_type}, c_phone=#{c_phone} 
+   WHERE c_pk_cnum = #{c_pk_cnum}
+</update>
+
+<delete id="delCimg" parameterType="String">
+   DELETE 
+   FROM cimg 
+   WHERE ci_sysname = #{sysname}
+</delete>
+
+
+<select id="getList" parameterType="String" resultType="CompanyDto">
+   SELECT 
+      * 
+   FROM company 
+   WHERE c_fk_id=#{m_username} 
+      AND c_check=1
+</select>
+
+<select id="getListCount" parameterType="String" resultType="int">
+   SELECT 
+      count(*) 
+   FROM company 
+   WHERE c_fk_id=#{m_username} 
+      AND c_check=1
+</select>
+
+<select id="selectCompanyById" parameterType="Integer" resultType="CompanyDto">
+   SELECT 
+      * 
+   FROM company 
+   WHERE c_pk_num = #{value}
+</select>
+
+<select id="selectCompanyByIdWithFileData" parameterType="Integer" resultMap="selectCompanyByIdResultMap">
+   SELECT 
+      * 
+   FROM company C
+   LEFT OUTER JOIN file F
+      ON C.c_file_group_no = F.file_group_no
+      AND F.description LIKE '%Main'
+   WHERE C.c_pk_num = #{value}
+</select>
+
+<resultMap id="selectCompanyByIdResultMap" type="businessPlaceModel">
+   <id property="c_pk_num" column="c_pk_num"/>
+   <result property="c_cnum" column="c_cnum"/>
+   <result property="c_name" column="c_name"/>
+   <result property="c_phone" column="c_phone"/>
+   <result property="c_category" column="c_category"/>
+   <result property="c_addr" column="c_addr"/>
+   <result property="c_type" column="c_type"/>
+   <result property="c_lat" column="c_lat"/>
+   <result property="c_lon" column="c_lon"/>
+   <result property="c_file_group_no" column="c_file_group_no"/>
+   
+   <!-- property 자바 타입명, column DB  컬럼명 || javaType은 alias 별칭으로 정한걸 넣어도 상관 없음 -->
+   <association property="fileData" javaType="businessFileModel">
+      <id property="idx" column="idx" />
+      <result property="file_group_no" column="file_group_no" />
+      <result property="url" column="url" />
+      <result property="file_ori_nm" column="file_ori_nm" />
+      <result property="file_sys_nm" column="file_sys_nm" />
+      <result property="extension" column="extension" />
+      <result property="description" column="description" />
+      <result property="file_size" column="file_size" />
+      <result property="file_size_unit" column="file_size_unit" />
+      <result property="create_dt" column="create_dt" />
+   </association>
+</resultMap>
+
+<select id="selectProductByCompanyPkAndWithFileData" parameterType="Integer" resultMap="selectItemByCompanyPKResultMap">
+   SELECT 
+      *
+   FROM product P 
+   LEFT OUTER JOIN file F
+      ON P.file_group_no = F.file_group_no 
+      AND F.description LIKE '%Main'
+   WHERE P.p_fk_cnum =  #{value}
+</select>
+
+<resultMap id="selectItemByCompanyPKResultMap" type="businessItemModel">
+   <id property="idx" column="idx"/>
+   <result property="p_fk_cnum" column="p_fk_cnum"/>
+   <result property="p_price" column="p_price"/>
+   <result property="p_content" column="p_content"/>
+   <result property="p_reserver_status" column="p_reserver_status"/>
+   <result property="p_exposure" column="p_exposure"/>
+   <result property="create_dt" column="create_dt"/>
+   <result property="update_dt" column="update_dt"/>
+   
+   <!-- property 자바 타입명, column DB  컬럼명 || javaType은 alias 별칭으로 정한걸 넣어도 상관 없음 -->
+   <association property="fileData" javaType="businessFileModel">
+      <id property="idx" column="idx" />
+      <result property="file_group_no" column="file_group_no" />
+      <result property="url" column="url" />
+      <result property="file_ori_nm" column="file_ori_nm" />
+      <result property="file_sys_nm" column="file_sys_nm" />
+      <result property="extension" column="extension" />
+      <result property="description" column="description" />
+      <result property="file_size" column="file_size" />
+      <result property="file_size_unit" column="file_size_unit" />
+      <result property="create_dt" column="create_dt" />
+   </association>
+</resultMap>
+
+<insert id="roomInsert" parameterType="RoomDto" useGeneratedKeys="true" keyProperty="r_pk_num">
+   <selectKey keyProperty="r_pk_num" resultType="Integer"
+      order="AFTER">
+      SELECT LAST_INSERT_ID()
+   </selectKey>
+   INSERT INTO room 
+   VALUES
+      (
+         null,
+         #{r_fk_cnum},
+         #{r_name}, 
+         null ,
+         #{r_contents},
+         ${r_price},
+         #{r_in},
+         #{r_out},
+         0
+      )
+</insert>
+
+<update id="roomImgUpdate" parameterType="HashMap">
+   UPDATE room 
+   SET r_img=#{sysname} 
+   WHERE r_pk_num=#{r_pk_num}
+</update>
+
+<insert id="rImgInsert" parameterType="HashMap">
+   INSERT INTO rimg 
+   VALUES 
+      (
+         NULL,
+         #{r_pk_num},
+         #{oriname},
+         #{sysname}
+      )
+</insert>
+
+<select id="selectRoomByCnum" parameterType="Integer" resultType="RoomDto">
+   SELECT 
+      * 
+   FROM room 
+   WHERE r_fk_cnum = #{data}
+</select>
+
+<select id="getRimgList" parameterType="String" resultType="RoomImgDto">
+   SELECT 
+      * 
+   FROM rimg 
+   WHERE ri_fk_num = #{ri_fk_num}
+</select>
+
+<select id="selectAactivityByCnum" parameterType="Integer" resultType="AactivityDto">
+   SELECT 
+      * 
+   FROM Aactivity 
+   WHERE at_fk_cnum = #{data}
+</select>
+
+<insert id="AactivityInsert" parameterType="AactivityDto" useGeneratedKeys="true" keyProperty="at_pk_num">
+   <selectKey keyProperty="at_pk_num" resultType="Integer"
+      order="AFTER">
+      SELECT LAST_INSERT_ID()
+   </selectKey>
+   <if test='at_rtch.equals("0")'>
+      INSERT INTO Aactivity 
+      VALUES
+         (
+            null,#
+            {at_fk_cnum},
+            #{at_name}, 
+            null ,
+            #{at_contents},
+            ${at_price},
+            null,
+            null,
+            false,
+            0
+         )
+   </if>
+   <if test='at_rtch.equals("1")'>
+      INSERT INTO Aactivity 
+      VALUES
+         (
+            null,
+            #{at_fk_cnum},
+            #{at_name}, 
+            null ,
+            #{at_contents},
+            ${at_price},
+            ${at_in},
+            ${at_out},
+            true,
+            0
+         )
+   </if>
+</insert>
+
+<update id="AactivityImgUpdate" parameterType="HashMap">
+   UPDATE Aactivity 
+   SET at_img=#{sysname} 
+   WHERE at_pk_num=#{r_pk_num}
+</update>
+
+<insert id="aImgInsert" parameterType="HashMap">
+   INSERT INTO aimg 
+   VALUES 
+      (
+         NULL,
+         #{r_pk_num},
+         #{oriname},
+         #{sysname}
+      )
+</insert>
+
+
+
+
+
+<delete id="solDelrImg" parameterType="String">
+   DELETE 
+   FROM rimg 
+   WHERE ri_sysname=#{sysname}
+</delete>
+
+<select id="selectCnumList" parameterType="String" resultType="RoomImgDto">
+   SELECT 
+      * 
+   FROM rimg 
+   WHERE ri_fk_num=#{rnum}
+</select>
+
+<update id="roomUpdate" parameterType="RoomDto">
+   UPDATE room 
+   SET r_name=#{r_name} , r_contents=#{r_contents}, r_price=#{r_price}, r_in=#{r_in}, r_out=#{r_out}, r_hidden=#{r_hidden}
+   WHERE r_pk_num = #{r_pk_num} 
+</update>
+
+<select id="getAimgList" parameterType="String" resultType="AimgDto">
+   SELECT 
+      * 
+   FROM aimg 
+   WHERE ai_fk_num = #{ai_fk_num}
+</select>
+
+<delete id="solDelaImg" parameterType="String">
+   DELETE 
+   FROM aimg 
+   WHERE ai_sysname=#{sysname}
+</delete>
+
+<update id="AactivityUpdate" parameterType="AactivityDto">
+
+   <if test='at_rtch.equals("0")'>
+      UPDATE Aactivity 
+      SET at_name=#{at_name}, at_contents=#{at_contents}, at_price=#{at_price}, at_rtch=#{at_rtch}, at_hidden=#{at_hidden} 
+      WHERE at_pk_num=#{at_pk_num}
+   </if>
+
+   <if test='at_rtch.equals("1")'>
+      UPDATE Aactivity 
+      SET at_name=#{at_name}, at_contents=#{at_contents}, at_price=#{at_price}, at_in=#{at_in}, at_out=#{at_out}, at_rtch=#{at_rtch}, at_hidden=#{at_hidden} 
+      WHERE at_pk_num=#{at_pk_num}
+   </if>
+
+</update>
+
+<delete id="del_fk_delRImg" parameterType="String">
+   DELETE 
+   FROM rimg 
+   WHERE ri_fk_num=#{ri_fk_num}
+</delete>
+
+<delete id="delPK_Room" parameterType="String">
+   DELETE 
+   FROM room 
+   WHERE r_pk_num=#{r_pk_num}
+</delete>
+
+<delete id="del_fk_delAImg" parameterType="String">
+   DELETE 
+   FROM aimg 
+   WHERE ai_fk_num=#{ai_fk_num}
+</delete>
+
+<delete id="delPK_Aactivity" parameterType="String">
+   DELETE 
+   FROM Aactivity 
+   WHERE at_pk_num=#{at_pk_num}
+</delete>
+
+<select id="searchCompany" parameterType="ListDto" resultType="CompanyDto">
+   SELECT 
+      * 
+   FROM company 
+   WHERE c_fk_id=#{id} 
+      AND ${colname} LIKE CONCAT('%',#{keyword},'%') 
+      AND 
+   <if test="lod == null and dir == null and act == null">
+      (c_category="숙박" or c_category="레저" or c_category="식당")
+   </if>
+
+   <trim prefix="(" suffix=")" suffixOverrides="OR">
+      <if test="lod != null and lod != ''">
+         c_category = #{lod} OR
+      </if>
+      <if test="act != null and act != ''">
+         c_category = #{act} OR
+      </if>
+      <if test="dir != null and dir != ''">
+         c_category = #{dir} OR
+      </if>
+   </trim>
+
+   <if test='c_check.equals("0")'>
+      AND c_condition = #{c_check}      
+   </if>
+   <if test='c_check.equals("1")'>
+      AND c_condition = #{c_check}
+   </if>
+
+</select>
+
+<update id="updateCondition" parameterType="CompanyDto">
+   UPDATE company 
+   SET c_condition=${c_condition} 
+   WHERE c_pk_cnum=#{c_pk_cnum}
+</update>
+
+<delete id="deleteCompany" parameterType="String">
+   DELETE 
+   FROM company 
+   WHERE c_pk_cnum=#{cnum}
+</delete>
+
+<update id="solMemChange" parameterType="MemberDto">
+   UPDATE member 
+   SET m_category=#{m_category} 
+   WHERE m_username=#{m_username}
+</update>
+
+<select id="cnumDeduplication" parameterType="String" resultType="int">
+   SELECT 
+      count(*) 
+   FROM company 
+   WHERE c_pk_cnum = #{cnum}
+</select>
+
+<select id="selectReviewByCnum" parameterType="Integer" resultType="ReviewDto">
+   SELECT 
+      * 
+   FROM review 
+   WHERE rv_fk_cnum = #{cnum}
+</select>
+
+<update id="reviewAnswer" parameterType="ReviewDto">
+   UPDATE review 
+   SET rv_answer=#{rv_answer}, rv_check=1, rv_updatedate=#{rv_updatedate} 
+   WHERE rv_pk_num=#{rv_pk_num}
+</update>
+
+<delete id="reviewDelete" parameterType="String">
+   DELETE 
+   FROM review 
+   WHERE rv_fk_cnum=#{cnum}
+</delete>
+
+<delete id="loptionDelete" parameterType="String">
+   DELETE 
+   FROM loption 
+   WHERE l_fk_cnum = #{cnum}
+</delete>
+
+<delete id="aoptionDelete" parameterType="String">
+   DELETE 
+   FROM aoption 
+   WHERE a_fk_cnum = #{cnum}
+</delete>
+
+<update id="loptionUpdate" parameterType="LoptionDto">
+   UPDATE loption 
+   SET 
+      L_Cityview=#{l_cityview},
+      L_Seeview=#{l_seeview},
+      L_Skyview=#{l_skyview},
+      L_Outdoor=#{l_outdoor},
+      L_Petok=#{l_petok},
+      L_Bbq=#{l_bbq},
+      L_Cooking=#{l_cooking},
+      L_Pool=#{l_pool},
+      L_Spa=#{l_spa}, 
+      L_Wallpool=#{l_wallpool},
+      L_Garaoke=#{l_garaoke} 
+   WHERE L_Fk_cnum=#{l_fk_cnum}
+</update>
+
+
+
+<update id="aoptionUpdate" parameterType="AoptionDto">
+   UPDATE aoption 
+   SER 
+      a_waterpark=#{a_waterpark},
+      a_spa=#{a_spa},
+      a_surfing=#{a_surfing},
+      a_snowcooling=#{a_snowcooling},
+      a_rafting=#{a_rafting},
+      a_aquarium=#{a_aquarium},
+      a_flowers=#{a_flowers},
+      a_zoo=#{a_zoo},
+      a_shooting=#{a_shooting},
+      a_horse=#{a_horse},
+      a_paragliding=#{a_paragliding},
+      a_zipline=#{a_zipline},
+      a_bike=#{a_bike},
+      a_cart=#{a_cart},
+      a_atv=#{a_atv},
+      a_tourpass=#{a_tourpass},
+      a_yort=#{a_yort},
+      a_shipfishing=#{a_shipfishing},
+      a_cablecar=#{a_cablecar},
+      a_showpainting=#{a_showpainting},
+      a_fishinglounge=#{a_fishinglounge},
+      a_show=#{a_show} 
+   WHERE A_fk_cnum=#{a_fk_cnum}
+</update>
+
+<select id="selectLoptionByCnum" parameterType="Integer" resultType="LoptionDto">
+   SELECT 
+      * 
+   FROM loption 
+   WHERE L_Fk_cnum=#{cnum}
+</select>
+
+<select id="selectAoptionByCnum" parameterType="Integer" resultType="AoptionDto">
+   SELECT 
+      * 
+   FROM aoption 
+   WHERE A_fk_cnum = #{cnum}
+</select>
+
+<update id="companyOff" parameterType="String">
+   UPDATE company 
+   SET c_check = 0 
+   WHERE c_fk_id = #{id}
+</update>
+
+<delete id="reviewMemberDelete" parameterType="String">
+   DELETE 
+   FROM review 
+   WHERE rv_fk_id=#{id}
+</delete>
+
+</mapper>

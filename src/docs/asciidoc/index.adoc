@@ -1,0 +1,985 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= JEJU REST Docs
+API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+// [[장바구니-API]]
+// == 장바구니 API
+
+// [[장바구니-장바구니Insert]]
+// === [장바구니 예약건 일정 장바구니에 추가 API]
+
+// ==== [HTTP 요청 정보]
+// include::{snippets}/basket/insert_basket_reserve/http-request.adoc[]
+
+// include::{snippets}/basket/insert_basket_reserve/request-headers.adoc[]
+
+// include::{snippets}/basket/insert_basket_reserve/request-fields.adoc[]
+
+// ==== [HTTP 응답 정보]
+
+// include::{snippets}/basket/insert_basket_reserve/http-response.adoc[]
+
+// include::{snippets}/basket/insert_basket_reserve/response-fields.adoc[]
+
+// ***
+// ___
+
+// [[장바구니-장바구니InsertReserve]]
+// === [장바구니 예약없는 일정 장바구니에 추가 API]
+
+// ==== [HTTP 요청 정보]
+// include::{snippets}/basket/insert_basket/http-request.adoc[]
+
+// include::{snippets}/basket/insert_basket/request-headers.adoc[]
+
+// include::{snippets}/basket/insert_basket/request-fields.adoc[]
+
+// ==== [HTTP 응답 정보]
+// include::{snippets}/basket/insert_basket/http-response.adoc[]
+
+// include::{snippets}/basket/insert_basket/response-fields.adoc[]
+
+// ***
+// ___
+
+// [[장바구니-장바구니Delete]]
+// === [장바구니 장바구니에 삭제 API]
+
+// ==== [HTTP 요청 정보]
+// include::{snippets}/basket/delete_basket/http-request.adoc[]
+
+// include::{snippets}/basket/delete_basket/request-headers.adoc[]
+
+// include::{snippets}/basket/delete_basket/query-parameters.adoc[]
+
+// ==== [HTTP 응답 정보]
+// include::{snippets}/basket/delete_basket/http-response.adoc[]
+
+// include::{snippets}/basket/delete_basket/response-fields.adoc[]
+
+// ***
+
+[[메인-API]]
+== 메인 API
+
+// [[메인-Home]]
+// === [메인 홈화면 API]
+
+// ==== [HTTP 요청 정보]
+// include::{snippets}/메인/home/http-request.adoc[]
+
+// ==== [HTTP 응답 정보]
+// include::{snippets}/메인/home/http-response.adoc[]
+
+// include::{snippets}/메인/home/response-fields.adoc[]
+
+[[메인-HomeBusinessPlace]]
+=== [메인 홈화면 랜덤 영업장 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/home/business_place/http-request.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/home/business_place/http-response.adoc[]
+
+include::{snippets}/main/home/business_place/response-fields.adoc[]
+
+***
+___
+
+[[메인-HomeEeventSpot]]
+=== [메인 홈화면 이벤트,관광지 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/home/event-spot/http-request.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/home/event-spot/http-response.adoc[]
+
+include::{snippets}/main/home/event-spot/response-fields.adoc[]
+
+***
+___
+
+[[메인-HomeNotice]]
+=== [메인 홈화면 공지사항 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/home/notice/http-request.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/home/notice/http-response.adoc[]
+
+include::{snippets}/main/home/notice/response-fields.adoc[]
+
+***
+___
+
+[[메인-HomeComplaint]]
+=== [메인 홈화면 신고사항 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/home/complaint/http-request.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/home/complaint/http-response.adoc[]
+
+include::{snippets}/main/home/complaint/response-fields.adoc[]
+
+***
+___
+ 
+[[메인-BusinessPlace]]
+=== [메인 카테고리별 영업장 리스트 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/business_place/http-request.adoc[]
+
+include::{snippets}/main/business_place/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/business_place/http-response.adoc[]
+
+include::{snippets}/main/business_place/response-fields.adoc[]
+
+***
+___
+ 
+[[메인-BusinessItem]]
+=== [메인 영업장의 상품들 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/business_item/http-request.adoc[]
+
+include::{snippets}/main/business_item/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/business_item/http-response.adoc[]
+
+include::{snippets}/main/business_item/response-fields.adoc[]
+
+***
+___
+ 
+[[메인-ItemInfomation]]
+=== [메인 상품 상세정보 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/item_infomation/http-request.adoc[]
+
+include::{snippets}/main/item_infomation/request-headers.adoc[]
+
+include::{snippets}/main/item_infomation/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/item_infomation/http-response.adoc[]
+
+include::{snippets}/main/item_infomation/response-fields.adoc[]
+
+***
+___
+
+
+// [[메인-UpdatePay]]
+// === [메인 결제 업데이트 API]
+
+// ==== [HTTP 요청 정보]
+// include::{snippets}/main/update_pay/http-request.adoc[]
+
+// include::{snippets}/main/update_pay/request-headers.adoc[]
+
+// include::{snippets}/main/update_pay/request-fields.adoc[]
+
+// ==== [HTTP 응답 정보]
+// include::{snippets}/main/update_pay/http-response.adoc[]
+
+// include::{snippets}/main/update_pay/response-fields.adoc[]
+
+// ***
+// ___
+
+[[메인-OptionCheck]]
+=== [메인 옵션에 맞춰 영업장 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/option_check/http-request.adoc[]
+
+include::{snippets}/main/option_check/request-headers.adoc[]
+
+include::{snippets}/main/option_check/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/option_check/http-response.adoc[]
+
+include::{snippets}/main/option_check/response-fields.adoc[]
+
+***
+___
+
+[[메인-InsertReview]]
+=== [메인 리뷰 추가 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/insert_review/http-request.adoc[]
+
+include::{snippets}/main/insert_review/request-headers.adoc[]
+
+include::{snippets}/main/insert_review/request-parts.adoc[]
+
+include::{snippets}/main/insert_review/request-part-metadata-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/insert_review/http-response.adoc[]
+
+include::{snippets}/main/insert_review/response-fields.adoc[]
+
+***
+___
+
+[[메인-InsertFavorite]]
+=== [메인 즐겨찾기 추가 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/insert_favorite/http-request.adoc[]
+
+include::{snippets}/main/insert_favorite/request-headers.adoc[]
+
+include::{snippets}/main/insert_favorite/request-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/insert_favorite/http-response.adoc[]
+
+include::{snippets}/main/insert_favorite/response-fields.adoc[]
+
+***
+___
+
+[[메인-PublicBlog]]
+=== [메인 랜덤 후기글 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/main/public_blog/http-request.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/main/public_blog/http-response.adoc[]
+
+include::{snippets}/main/public_blog/response-fields.adoc[]
+
+***
+___
+
+[[회원-API]]
+== 회원 API
+
+[[회원-Insert]]
+=== [회원 회원가입 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/member/insert/http-request.adoc[]
+
+include::{snippets}/member/insert/request-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/member/insert/http-response.adoc[]
+
+include::{snippets}/member/insert/response-fields.adoc[]
+
+***
+___
+
+[[회원-RefreshToken]]
+=== [회원 리프레쉬 - 액세스토큰 재발급 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/member/refresh_token/http-request.adoc[]
+
+include::{snippets}/member/refresh_token/request-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/member/refresh_token/http-response.adoc[]
+
+include::{snippets}/member/refresh_token/response-fields.adoc[]
+
+***
+___
+
+[[회원-Logout]]
+=== [회원 로그아웃 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/member/logout/http-request.adoc[]
+
+include::{snippets}/member/logout/request-headers.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/member/logout/http-response.adoc[]
+
+include::{snippets}/member/logout/response-fields.adoc[]
+
+***
+___
+
+[[회원-IDChceck]]
+=== [회원 아이디 중복확인 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/member/id_check/http-request.adoc[]
+
+include::{snippets}/member/id_check/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/member/id_check/http-response.adoc[]
+
+include::{snippets}/member/id_check/response-fields.adoc[]
+
+***
+___
+
+[[회원-NickNameCheck]]
+=== [회원 닉네임 중복확인 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/member/nick_check/http-request.adoc[]
+
+include::{snippets}/member/nick_check/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/member/nick_check/http-response.adoc[]
+
+include::{snippets}/member/nick_check/response-fields.adoc[]
+
+***
+___
+
+[[회원-SendSms]]
+=== [회원 인증 메세지전송하기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/member/send_sms/http-request.adoc[]
+
+include::{snippets}/member/send_sms/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/member/send_sms/http-response.adoc[]
+
+include::{snippets}/member/send_sms/response-fields.adoc[]
+
+***
+___
+
+[[회원-CertSms]]
+=== [회원 문자 메세지 인증하기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/member/cert_sms/http-request.adoc[]
+
+include::{snippets}/member/cert_sms/request-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/member/cert_sms/http-response.adoc[]
+
+include::{snippets}/member/cert_sms/response-fields.adoc[]
+
+***
+___
+
+[[회원-Profile]]
+=== [회원 프로필 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/member/profile/http-request.adoc[]
+
+include::{snippets}/member/profile/request-headers.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/member/profile/http-response.adoc[]
+
+include::{snippets}/member/profile/response-fields.adoc[]
+
+***
+___
+
+[[마이페이지-API]]
+== 마이페이지 API
+
+[[마이페이지-Home]]
+=== [마이페이지 메인화면 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/home/http-request.adoc[]
+
+include::{snippets}/mypage/home/request-headers.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/home/http-response.adoc[]
+
+include::{snippets}/mypage/home/response-fields.adoc[]
+
+
+***
+___
+
+// [[마이페이지-Deal]]
+// === [마이페이지 거래내역조회 API]
+
+// ==== [HTTP 요청 정보]
+// include::{snippets}/mypage/deal/http-request.adoc[]
+
+// include::{snippets}/mypage/deal/request-headers.adoc[]
+
+// include::{snippets}/mypage/deal/query-parameters.adoc[]
+
+// ==== [HTTP 응답 정보]
+// include::{snippets}/mypage/deal/http-response.adoc[]
+
+// include::{snippets}/mypage/deal/response-fields.adoc[]
+
+
+// ***
+// ___
+
+[[마이페이지-Favorite]]
+=== [마이페이지 즐겨찾기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/favorite/http-request.adoc[]
+
+include::{snippets}/mypage/favorite/request-headers.adoc[]
+
+include::{snippets}/mypage/favorite/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/favorite/http-response.adoc[]
+
+include::{snippets}/mypage/favorite/response-fields.adoc[]
+
+
+***
+___
+
+
+[[마이페이지-Review]]
+=== [마이페이지 리뷰 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/review/http-request.adoc[]
+
+include::{snippets}/mypage/review/request-headers.adoc[]
+
+include::{snippets}/mypage/review/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/review/http-response.adoc[]
+
+include::{snippets}/mypage/review/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-Blog]]
+=== [마이페이지 후기글 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/blog/http-request.adoc[]
+
+include::{snippets}/mypage/blog/request-headers.adoc[]
+
+include::{snippets}/mypage/blog/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/blog/http-response.adoc[]
+
+include::{snippets}/mypage/blog/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-BlogDetail]]
+=== [마이페이지 후기글 상세 조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/blog_detail/http-request.adoc[]
+
+include::{snippets}/mypage/blog_detail/request-headers.adoc[]
+
+include::{snippets}/mypage/blog_detail/path-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/blog_detail/http-response.adoc[]
+
+include::{snippets}/mypage/blog_detail/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-BlogCreate]]
+=== [마이페이지 후기글 추가 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/blog/create/http-request.adoc[]
+
+include::{snippets}/mypage/blog/create/request-headers.adoc[]
+
+include::{snippets}/mypage/blog/create/request-parts.adoc[]
+
+include::{snippets}/mypage/blog/create/request-part-metadata-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/blog/create/http-response.adoc[]
+
+include::{snippets}/mypage/blog/create/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-BlogUpdate]]
+=== [마이페이지 후기글 수정-대문사진 포함 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/blog/update/http-request.adoc[]
+
+include::{snippets}/mypage/blog/update/request-headers.adoc[]
+
+include::{snippets}/mypage/blog/update/request-parts.adoc[]
+
+include::{snippets}/mypage/blog/update/request-part-metadata-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/blog/update/http-response.adoc[]
+
+include::{snippets}/mypage/blog/update/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-BlogAddPicture]]
+=== [마이페이지 후기글 사진추가 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/blog/add/picture/http-request.adoc[]
+
+include::{snippets}/mypage/blog/add/picture/request-headers.adoc[]
+
+include::{snippets}/mypage/blog/add/picture/request-parts.adoc[]
+
+include::{snippets}/mypage/blog/add/picture/request-part-metadata-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/blog/add/picture/http-response.adoc[]
+
+include::{snippets}/mypage/blog/add/picture/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-BlogDeletePicture]]
+=== [마이페이지 후기글 사진삭제 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/blog/delete/picture/http-request.adoc[]
+
+include::{snippets}/mypage/blog/delete/picture/request-headers.adoc[]
+
+include::{snippets}/mypage/blog/delete/picture/path-parameters.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/blog/delete/picture/http-response.adoc[]
+
+include::{snippets}/mypage/blog/delete/picture/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-회원Update]]
+=== [마이페이지 회원정보 수정 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/member/update/http-request.adoc[]
+
+include::{snippets}/mypage/member/update/request-headers.adoc[]
+
+include::{snippets}/mypage/member/update/request-fields.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/member/update/http-response.adoc[]
+
+include::{snippets}/mypage/member/update/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-회원PasswordCheck]]
+=== [마이페이지 회원암호체크 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/member/password/check/http-request.adoc[]
+
+include::{snippets}/mypage/member/password/check/request-headers.adoc[]
+
+include::{snippets}/mypage/member/password/check/request-fields.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/member/password/check/http-response.adoc[]
+
+include::{snippets}/mypage/member/password/check/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-회원PasswordUpdate]]
+=== [마이페이지 회원암호변경 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/member/password/update/http-request.adoc[]
+
+include::{snippets}/mypage/member/password/update/request-headers.adoc[]
+
+include::{snippets}/mypage/member/password/update/request-fields.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/member/password/update/http-response.adoc[]
+
+include::{snippets}/mypage/member/password/update/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-ReviewDelete]]
+=== [마이페이지 리뷰삭제 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/review/delete/http-request.adoc[]
+
+include::{snippets}/mypage/review/delete/request-headers.adoc[]
+
+include::{snippets}/mypage/review/delete/query-parameters.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/review/delete/http-response.adoc[]
+
+include::{snippets}/mypage/review/delete/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-TravelDetail]]
+=== [마이페이지 여정상세보기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/travel/detail/http-request.adoc[]
+
+include::{snippets}/mypage/travel/detail/request-headers.adoc[]
+
+include::{snippets}/mypage/travel/detail/path-parameters.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/travel/detail/http-response.adoc[]
+
+include::{snippets}/mypage/travel/detail/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-TravelDetail]]
+=== [마이페이지 여정삭제하기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/travel/delete/http-request.adoc[]
+
+include::{snippets}/mypage/travel/delete/request-headers.adoc[]
+
+include::{snippets}/mypage/travel/delete/path-parameters.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/travel/delete/http-response.adoc[]
+
+include::{snippets}/mypage/travel/delete/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-TravelUpdateComplate]]
+=== [마이페이지 여정완료하기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/travel/update/complate/http-request.adoc[]
+
+include::{snippets}/mypage/travel/update/complate/request-headers.adoc[]
+
+include::{snippets}/mypage/travel/update/complate/request-fields.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/travel/update/complate/http-response.adoc[]
+
+include::{snippets}/mypage/travel/update/complate/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-TravelUpdateComplate]]
+=== [마이페이지 여정리스트 조회하기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/travel/http-request.adoc[]
+
+include::{snippets}/mypage/travel/request-headers.adoc[]
+
+include::{snippets}/mypage/travel/query-parameters.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/travel/http-response.adoc[]
+
+include::{snippets}/mypage/travel/response-fields.adoc[]
+
+
+***
+___
+
+[[마이페이지-TravelUpdateComplate]]
+=== [마이페이지 즐겨찾기 삭제하기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/mypage/favorite/delete/http-request.adoc[]
+
+include::{snippets}/mypage/favorite/delete/request-headers.adoc[]
+
+include::{snippets}/mypage/favorite/delete/path-parameters.adoc[]
+
+
+==== [HTTP 응답 정보]
+include::{snippets}/mypage/favorite/delete/http-response.adoc[]
+
+include::{snippets}/mypage/favorite/delete/response-fields.adoc[]
+
+
+***
+___
+
+[[서비스센터-API]]
+== 서비스센터 API
+
+[[서비스센터-Notice]]
+=== [서비스센터 공지사항 리스트조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/service-center/notice/http-request.adoc[]
+
+include::{snippets}/service-center/notice/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/service-center/notice/http-response.adoc[]
+
+include::{snippets}/service-center/notice/response-fields.adoc[]
+
+***
+___
+
+[[서비스센터-NoticeDetail]]
+=== [서비스센터 공지사항 상세조회 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/service-center/notice/detail/http-request.adoc[]
+
+include::{snippets}/service-center/notice/detail/path-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/service-center/notice/detail/http-response.adoc[]
+
+include::{snippets}/service-center/notice/detail/response-fields.adoc[]
+
+***
+___
+
+[[서비스센터-Complaint]]
+=== [서비스센터 건의사항 리스트조회  API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/service-center/qa/http-request.adoc[]
+
+include::{snippets}/service-center/qa/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/service-center/qa/http-response.adoc[]
+
+include::{snippets}/service-center/qa/response-fields.adoc[]
+
+***
+___
+
+[[서비스센터-ComplaintInsert]]
+=== [서비스센터 건의사항 등록  API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/service-center/qa/insert/http-request.adoc[]
+
+include::{snippets}/service-center/qa/insert/request-headers.adoc[]
+
+include::{snippets}/service-center/qa/insert/request-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/service-center/qa/insert/http-response.adoc[]
+
+include::{snippets}/service-center/qa/insert/response-fields.adoc[]
+
+***
+___
+
+[[서비스센터-ComplaintMyList]]
+=== [서비스센터 나의 건의사항 목록조회  API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/service-center/qa/my-list/http-request.adoc[]
+
+include::{snippets}/service-center/qa/my-list/request-headers.adoc[]
+
+include::{snippets}/service-center/qa/my-list/query-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/service-center/qa/my-list/http-response.adoc[]
+
+include::{snippets}/service-center/qa/my-list/response-fields.adoc[]
+
+***
+___
+
+[[서비스센터-ComplaintDetail]]
+=== [서비스센터 건의사항 상세조회  API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/service-center/qa/detail/http-request.adoc[]
+
+include::{snippets}/service-center/qa/detail/path-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/service-center/qa/detail/http-response.adoc[]
+
+include::{snippets}/service-center/qa/detail/response-fields.adoc[]
+
+***
+___
+
+[[서비스센터-ComplaintDelete]]
+=== [서비스센터 건의사항 삭제  API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/service-center/qa/delete/http-request.adoc[]
+
+include::{snippets}/service-center/qa/delete/request-headers.adoc[]
+
+include::{snippets}/service-center/qa/delete/path-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/service-center/qa/delete/http-response.adoc[]
+
+include::{snippets}/service-center/qa/delete/response-fields.adoc[]
+
+***
+___
+
+[[여행관련-API]]
+== 여행관련 API
+
+[[여행관련-TravelInsert]]
+=== [여행관련 여정생성 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/travel/insert/http-request.adoc[]
+
+include::{snippets}/travel/insert/request-headers.adoc[]
+
+include::{snippets}/travel/insert/request-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/travel/insert/http-response.adoc[]
+
+include::{snippets}/travel/insert/response-fields.adoc[]
+
+***
+___
+
+
+[[여행관련-TravelPlanInsert]]
+=== [여행관련 여정계획생성 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/travel/plan/insert/http-request.adoc[]
+
+include::{snippets}/travel/plan/insert/request-headers.adoc[]
+
+include::{snippets}/travel/plan/insert/request-fields.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/travel/plan/insert/http-response.adoc[]
+
+include::{snippets}/travel/plan/insert/response-fields.adoc[]
+
+***
+___
+
+[[여행관련-TravelPlanDelete]]
+=== [여행관련 여정계획삭제 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/travel/plan/delete/http-request.adoc[]
+
+include::{snippets}/travel/plan/delete/request-headers.adoc[]
+
+include::{snippets}/travel/plan/delete/path-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/travel/plan/delete/http-response.adoc[]
+
+include::{snippets}/travel/plan/delete/response-fields.adoc[]
+
+***
+___
+
+[[여행관련-TravelPlanDelete]]
+=== [여행관련 여정계획 보여주기 API]
+
+==== [HTTP 요청 정보]
+include::{snippets}/travel/plan/select/http-request.adoc[]
+
+include::{snippets}/travel/plan/select/request-headers.adoc[]
+
+include::{snippets}/travel/plan/select/path-parameters.adoc[]
+
+==== [HTTP 응답 정보]
+include::{snippets}/travel/plan/select/http-response.adoc[]
+
+include::{snippets}/travel/plan/select/response-fields.adoc[]
+
+***
+___

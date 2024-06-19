@@ -1,0 +1,76 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  push:
+    tags: [ "releases-**" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Grant execute permission for gradlew # gradlew에 대한 권한 부여 설명
+      run: chmod +x gradlew # gradlew에 대한 권한 부여 설정
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+
+    - name: Build with Gradle Wrapper
+      run: ./gradlew build -x test
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: JejuServer
+        path: build/libs/jeju-0.0.1-SNAPSHOT.jar # 빌드 후 생성할 jar 파일
+
+  deploy:
+      needs: build # 배포를 위해 필요한 과정
+      runs-on: ubuntu-latest # 배포시 사용 환경
+
+      steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: JejuServer
+          path: build/libs/ # 배포에 활용할 경로
+
+      - name: SCP transfer
+        uses: appleboy/scp-action@master
+        with:
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          host: ${{ secrets.SSH_SERVER_IP }}
+          port: ${{ secrets.SSH_PORT }}
+          rm: true
+          source: build/libs/jeju-0.0.1-SNAPSHOT.jar
+          target: ./jeju/
+          ## 작업에 사용했던 dist 디렉토리를 경로상에서 제거
+          strip_components: 1
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          host: ${{ secrets.SSH_SERVER_IP }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            sh /data/data/com.termux/files/home/jeju_storage/stop.sh
+            sleep 10
+            sh /data/data/com.termux/files/home/jeju_storage/start.sh

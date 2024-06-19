@@ -1,0 +1,30 @@
+server:
+    servlet:
+        context-path: /api
+    port: 8081
+
+logging:
+  config: classpath:logback-spring.xml
+
+Spring:
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB 
+    thymeleaf:
+        enabled: true
+        encoding: UTF-8
+        check-template-location: true
+        prefix: classpath:templates/
+        suffix: .html
+        mode: HTML5
+        template-resolver-order: 0
+        cache: false
+
+mybatis:
+    type-aliases-package: com.travel.jeju
+    configuration:
+        default-fetch-size: 100
+        default-statement-timeout: 30
+    mapper-locations: sql/*Mapper.xml
+
